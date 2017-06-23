@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/li_marginB"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/padding_normal"
+    android:paddingLeft="@dimen/padding_normal"
+    android:paddingRight="@dimen/padding_normal"
+    android:paddingTop="@dimen/padding_small">
+
+    <TextView
+        android:id="@+id/textview_li_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:maxLines="2"
+        android:textColor="@color/colorBookTitle"
+        android:textSize="@dimen/title_txt_size"
+        tools:text="Romeo and Juliet" />
+
+    <TextView
+        android:id="@+id/textview_li_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:maxLines="2"
+        android:textSize="@dimen/author_txt_size"
+        tools:text="William Shakespeare" />
+</LinearLayout>
