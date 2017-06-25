@@ -25,13 +25,17 @@ import static com.example.android.booklistingapp.BookActivity.LOG_TAG;
  */
 final class QueryUtils {
 
+    // URL connection read timeout in milliseconds
+    private static final int CONNECTION_READ_TIMEOUT = 10000;
+    // URL connect timeout in milliseconds
+    private static final int CONNECT_TIMEOUT = 15000;
+    // HTTP successful response code
+    private static final int HTTP_200_SUCCESSFUL = 200;
+
+    //An empty private constructor makes sure that the class is not going to be initialised.
     private QueryUtils() {
     }
 
-    /**
-     * Return a list of {@link Book} objects that has been built up from
-     * parsing a JSON response.
-     */
     /**
      * Query the Google Books API and return a list of {@link Book} objects.
      */
@@ -46,12 +50,9 @@ final class QueryUtils {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
-
         // Extract relevant fields from the JSON response and create a list of {@link Book}s
-        List<Book> books = extractFeatureFromJson(jsonResponse);
-
-        // Return the list of {@link Book}s
-        return books;
+        // and return the list of {@link Book}s
+        return extractFeatureFromJson(jsonResponse);
     }
 
     /**
@@ -146,12 +147,12 @@ final class QueryUtils {
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
-            urlConnection.setReadTimeout(10000 /* milliseconds */);
-            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setReadTimeout(CONNECTION_READ_TIMEOUT);
+            urlConnection.setConnectTimeout(CONNECT_TIMEOUT);
             urlConnection.connect();
             // If the request was successful (response code 200),
             // then read the input stream and parse the response.
-            if (urlConnection.getResponseCode() == 200) {
+            if (urlConnection.getResponseCode() == HTTP_200_SUCCESSFUL) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else {
@@ -164,7 +165,6 @@ final class QueryUtils {
                 urlConnection.disconnect();
             }
             if (inputStream != null) {
-                // function must handle java.io.IOException here
                 inputStream.close();
             }
         }
